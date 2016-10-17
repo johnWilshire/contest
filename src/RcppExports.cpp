@@ -5,13 +5,16 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP contest_rcpp_hello_world() {
+// run_simulation
+void run_simulation(int max_gens, double density, int num_nests, int males_per_winner);
+RcppExport SEXP contest_run_simulation(SEXP max_gensSEXP, SEXP densitySEXP, SEXP num_nestsSEXP, SEXP males_per_winnerSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< int >::type max_gens(max_gensSEXP);
+    Rcpp::traits::input_parameter< double >::type density(densitySEXP);
+    Rcpp::traits::input_parameter< int >::type num_nests(num_nestsSEXP);
+    Rcpp::traits::input_parameter< int >::type males_per_winner(males_per_winnerSEXP);
+    run_simulation(max_gens, density, num_nests, males_per_winner);
+    return R_NilValue;
 END_RCPP
 }
