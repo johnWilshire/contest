@@ -15,15 +15,20 @@ if(!require(devtools)) install.packages("devtools")
 devtools::install_github("johnwilshire/contest")
 ```
 # Implementation
-This package is built with  Rcpp.
+This package was created using Rcpp.
 
 ## TODO
 * Tests (Which? How? Where?)
 * Generation
+    * make males a heap/priority queue
 * Males
 * Nests
 * logging
+* finish DESCRIPTION file
+* parameters from json function wrapper
 
 ## Milestones 
 * one generation
+* log winners
+* log stuff
 * complete model
