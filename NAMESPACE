@@ -1,0 +1,3 @@
+useDynLib(contest)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
