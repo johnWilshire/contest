@@ -1,0 +1,20 @@
+test_that("run simulation starts",
+          {
+            run_simulation(max_gens = 1,
+                           males_per_winner = 10,
+                           num_nests = 10,
+                           density = 1,
+                           metabolism = 100,
+                           female_mat_time = 10, 
+                           maturation_rate = 1,
+                           mutation_rate = 0.1,
+                           mutation_sd = 0.1,
+                           mass_to_energy = 10,
+                           growth_a = 0.5,
+                           growth_b = 0.1,
+                           initial_mass = 5,
+                           alpha_mean = 0,
+                           alpha_sd = 3,
+                           beta_sd = 3,
+                           beta_mean = 0)
+          })

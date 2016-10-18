@@ -4,7 +4,10 @@
 using namespace Rcpp;
 
 class Nest {
-public:
-  Nest (){}
   Male * occupier;
+public:
+  
+  bool Occupied () {
+    return occupier == NULL;  
+  }
 };

@@ -6,6 +6,13 @@ This package implements an individual based model (sometimes called an agent bas
 that explores how and why these ART's emerge in a species x, which has non overlapping
 generations.
 
+## Model
+The males mature before the females. All females mature at the same time. 
+
+Starting at time 0, we pull the time of male maturation from an exponential distribution with rate `maturation_rate`.
+
+### parameters
+
 
 ## Usage and installation
 You can install this package with devtools.
@@ -21,6 +28,7 @@ This package was created using Rcpp.
 * Tests (Which? How? Where?)
 * Generation
     * make males a heap/priority queue
+    * main loop
 * Males
 * Nests
 * logging

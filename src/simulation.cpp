@@ -8,42 +8,67 @@ using namespace Rcpp;
 class Simulation {
 public:
   int current_gen, max_gens;
-  double density;
+  double density, maturation_time;
+  
+  std::map<std::string, double> parameters;
   
   int num_nests, males_per_winner;
   
-  Simulation(int max_gens_, 
-             double density_,
-             int num_nests_,
-             int males_per_winner_){
-    max_gens = max_gens_;
+  Simulation(std::map<std::string, double> parameters_){
+    parameters = parameters_;
     current_gen = 1;
-    
-    num_nests = num_nests_;
-    males_per_winner = males_per_winner_;
-    
-    density = density_;
   }
   
   void start(){
-    Generation gen ( density,
-                    num_nests,
-                    males_per_winner);
+    Generation gen (parameters);
+    gen.start_generation();
   }
 };
 
 // [[Rcpp::export]]
-void run_simulation(int max_gens, 
+void run_simulation(double max_gens, 
+                    double males_per_winner,
+                    double num_nests,
+                    double female_mat_time,
                     double density,
-                    int num_nests,
-                    int males_per_winner) {
+                    double metabolism,
+                    double maturation_rate,
+                    double mutation_rate,
+                    double mutation_sd,
+                    double mass_to_energy,
+                    double growth_a,
+                    double growth_b,
+                    double initial_mass,
+                    double alpha_mean,
+                    double alpha_sd,
+                    double beta_mean,
+                    double beta_sd) {
+
+  std::map<std::string, double> parameters;
   
-  // call the constructor
-  Simulation sim(max_gens, 
-                density,
-                num_nests,
-                males_per_winner);
-  Rcout << "made a gen" << std::endl;
+  // setup the parameter map (this saves us from having to pass around heaps of arguments)
+  
+  parameters["max_gens"] = max_gens; 
+  parameters["males_per_winner"] = males_per_winner; 
+  parameters["num_nests"] = num_nests; 
+  parameters["density"] = density;
+  parameters["metabolism"] = metabolism;
+  parameters["maturation_rate"] = maturation_rate;
+  parameters["female_mat_time"] = female_mat_time;
+  parameters["mutation_rate"] = mutation_rate;
+  parameters["mutation_sd"] = mutation_sd;
+  parameters["mass_to_energy"] = mass_to_energy;
+  parameters["growth_a"] = growth_a;
+  parameters["growth_b"] = growth_b;
+  parameters["initial_mass"] = initial_mass;
+  parameters["alpha_mean"] = alpha_mean;
+  parameters["alpha_sd"] = alpha_sd;
+  parameters["beta_mean"] = beta_mean;
+  parameters["beta_sd"] = beta_sd;
+
+  // call the constructo = r
+  Simulation sim(parameters);
+  // Rcout << "made a gen" << std::endl;
   // start the simulation
   sim.start();
   

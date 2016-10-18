@@ -10,3 +10,4 @@ Description: One paragraph description of what the package does as one
 License: GPL (>= 2)
 Imports: Rcpp (>= 0.12.7)
 LinkingTo: Rcpp
+Suggests: testthat
