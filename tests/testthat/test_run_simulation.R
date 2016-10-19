@@ -4,7 +4,7 @@ test_that("run simulation starts",
                            males_per_winner = 10,
                            num_nests = 10,
                            density = 1,
-                           metabolism = 100,
+                           metabolism = 10,
                            female_mat_time = 10, 
                            maturation_rate = 1,
                            mutation_rate = 0.1,
@@ -16,5 +16,6 @@ test_that("run simulation starts",
                            alpha_mean = 0,
                            alpha_sd = 3,
                            beta_sd = 3,
-                           beta_mean = 0)
+                           beta_mean = 0,
+                           verbose = F)
           })

@@ -3,12 +3,14 @@
 #include <queue>
 #include "male.cpp"
 #include "nest.cpp"
+#include "logger.cpp"
 
 using namespace Rcpp;
 
 class Generation {
   std::priority_queue<Male, std::vector<Male>, Compare> males;
   std::vector<Nest> nests;
+  std::vector<Male> winners;
   
   int id;
   double time, maturation_time;
@@ -27,18 +29,6 @@ public:
       males.push(Male(i, parameters));
       nests.push_back(Nest());
     }
-    std::priority_queue<Male, std::vector<Male>, Compare> males2;
-    
-    while(!males.empty()) {
-      Male m = males.top();
-      Rcout << "id: " << m.id << " ttne: " << m.next_event;
-      Rcout << " mass: " << m.mass << " energy: " <<  m.energy;
-      Rcout << " a: " << m.alpha << " b: " << m.beta << std::endl;
-      males.pop();
-      males2.push(m);
-    }
-    
-    males = males2;
   }
   
   // make a new generation from a previous one
@@ -49,21 +39,61 @@ public:
   
   void start_generation () {
     Rcout << std::endl << "starting generation " << id <<  std::endl << std::endl;
-
-    while(time < parameters["female_mat_time"] || males.empty()){
+    // main loop
+    while(time < parameters["female_mat_time"] && !males.empty()){
       Male male = males.top();
       double delta = male.next_event - time;
       males.pop();
-      Rcout << "time: " << time << " delta: " << delta; 
-      Rcout << "id: " << male.id << " energy: " << male.energy << std::endl;
+      if (parameters["verbose"] == 1){
+        Rcout << "time: " << time << " delta: " << delta; 
+        Rcout << " id: " << male.id << " energy: " << male.energy << std::endl;
+      }
+      
       time = male.next_event;
       male.make_next_event(time);
       male.metabolise(delta);
+      
       if (male.alive()) {
-        males.push(male);
-      } else {
+        // select a nest to occupy 
+        double nest_index = std::floor(R::runif(0, parameters["num_nests"]));
+        Nest nest = nests[nest_index];
+        
+        if (nest.occupied){
+          // fight over the nest  
+          males.push(male);
+        } else {
+          nest.occupy(male);
+        }
+        
+        // return the winner and the loser
+        // if the loser is still alive add them back into the male list'
+        // the winner 
+      } else if(parameters["verbose"] == 1) {
         Rcout << "male: " << male.id << " has died." << std::endl;
       }
     }
+    
+    // deduct energy costs for males in nests 
+    // and add the surviving males to a winners list
+    for(std::vector<Nest>::iterator it = nests.begin();
+          it != nests.end(); ++it){
+      Nest nest = *it; 
+      Rcout << "nest is " << (nest.occupied ? "occupied " : "not occupied") << std::endl;
+      if(nest.occupied) {
+        Male occupier = *nest.occupier;
+        occupier.metabolise(parameters["female_mat_time"] - occupier.last_event);
+        if(occupier.alive()){
+          winners.push_back(occupier);
+        } else {
+          // incrememnt death counter
+        }
+      }
+    }
+    // print winners
+    for(std::vector<Male>::iterator it = winners.begin();
+        it != winners.end(); ++it){
+      it->print();
+    }
+      
   }
 };

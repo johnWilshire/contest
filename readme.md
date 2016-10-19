@@ -7,12 +7,17 @@ that explores how and why these ART's emerge in a species x, which has non overl
 generations.
 
 ## Model
+### setup
 The males mature before the females. All females mature at the same time. 
 
 Starting at time 0, we pull the time of male maturation from an exponential distribution with rate `maturation_rate`.
 
-### parameters
+The longer males take to mature the more mass they have.
 
+Males then explore a patch and encounter nests 
+
+### parameters
+TODO
 
 ## Usage and installation
 You can install this package with devtools.

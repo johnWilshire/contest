@@ -21,7 +21,9 @@ public:
   
   void start(){
     Generation gen (parameters);
+    
     gen.start_generation();
+    
   }
 };
 
@@ -42,7 +44,8 @@ void run_simulation(double max_gens,
                     double alpha_mean,
                     double alpha_sd,
                     double beta_mean,
-                    double beta_sd) {
+                    double beta_sd,
+                    bool verbose) {
 
   std::map<std::string, double> parameters;
   
@@ -65,10 +68,10 @@ void run_simulation(double max_gens,
   parameters["alpha_sd"] = alpha_sd;
   parameters["beta_mean"] = beta_mean;
   parameters["beta_sd"] = beta_sd;
-
-  // call the constructo = r
+  
+  parameters["verbose"] = verbose ? 1 : 0;
+  
   Simulation sim(parameters);
-  // Rcout << "made a gen" << std::endl;
   // start the simulation
   sim.start();
   

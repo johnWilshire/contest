@@ -8,11 +8,11 @@ class Male {
 public:
   int id;
   double mass, energy;
-  double next_event;
-  double last_event;
-  double density;
+  double next_event; 
+  double last_event; 
+  double density; 
   double metabolism;
-  double alpha, beta;
+  double alpha, beta; // for contests
   
   // constructor
   Male (int id_, 
@@ -42,13 +42,12 @@ public:
   }
   
   void make_next_event (double time) {
+    last_event = next_event;
     next_event = time + R::rexp(density);
   }
   
-  void grow (double growth_a, 
-            double growth_b, 
-            double initial_mass,
-            double maturation) {
+  void grow (double growth_a, double growth_b, 
+              double initial_mass, double maturation) {
     mass = std::pow(initial_mass, 1 - growth_b); 
     mass += maturation * growth_a * ( 1.0 - growth_b);
     mass = std::pow(mass, 1.0 / (1.0 - growth_b));
@@ -60,6 +59,11 @@ public:
   
   void metabolise (double delta) {
     energy = energy - delta*metabolism;
+  }
+  
+  // 
+  void print () {
+    Rcout << "id: "  << id << " energy: " << energy << std::endl;
   }
   
   // for sorting the vector
