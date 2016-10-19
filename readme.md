@@ -12,9 +12,11 @@ The males mature before the females. All females mature at the same time.
 
 Starting at time 0, we pull the time of male maturation from an exponential distribution with rate `maturation_rate`.
 
-The longer males take to mature the more mass they have.
+The longer males take to mature the more mass they have. 
 
-Males then explore a patch and encounter nests 
+Males then explore a patch and encounter nests.
+For each male, we pull the time of the next nest encounter from the exponential distribution
+with the rate `density`
 
 ### parameters
 TODO
@@ -37,8 +39,11 @@ This package was created using Rcpp.
 * Males
 * Nests
 * logging
+    * log deaths and energy expenditure
 * finish DESCRIPTION file
 * parameters from json function wrapper
+* optimisations
+    * for parameters that will be used a lot in a class save them to the class
 
 ## Milestones 
 * one generation

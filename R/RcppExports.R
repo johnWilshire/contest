@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 run_simulation <- function(max_gens, males_per_winner, num_nests, female_mat_time, density, metabolism, maturation_rate, mutation_rate, mutation_sd, mass_to_energy, growth_a, growth_b, initial_mass, alpha_mean, alpha_sd, beta_mean, beta_sd, verbose) {
-    invisible(.Call('contest_run_simulation', PACKAGE = 'contest', max_gens, males_per_winner, num_nests, female_mat_time, density, metabolism, maturation_rate, mutation_rate, mutation_sd, mass_to_energy, growth_a, growth_b, initial_mass, alpha_mean, alpha_sd, beta_mean, beta_sd, verbose))
+    .Call('contest_run_simulation', PACKAGE = 'contest', max_gens, males_per_winner, num_nests, female_mat_time, density, metabolism, maturation_rate, mutation_rate, mutation_sd, mass_to_energy, growth_a, growth_b, initial_mass, alpha_mean, alpha_sd, beta_mean, beta_sd, verbose)
 }
 

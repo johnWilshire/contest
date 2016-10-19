@@ -66,6 +66,12 @@ public:
     Rcout << "id: "  << id << " energy: " << energy << std::endl;
   }
   
+  // returns true if the occupier is the winner:
+  // manages the metabolic costs of fighting
+  bool fight(Male attacker){
+    return true;
+  }
+  
   // for sorting the vector
   bool operator < (const Male& m) {
     return next_event < m.next_event;

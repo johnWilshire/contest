@@ -1,8 +1,8 @@
 test_that("run simulation starts",
           {
-            run_simulation(max_gens = 1,
+            print(run_simulation(max_gens = 1,
                            males_per_winner = 10,
-                           num_nests = 10,
+                           num_nests = 100,
                            density = 1,
                            metabolism = 10,
                            female_mat_time = 10, 
@@ -17,5 +17,5 @@ test_that("run simulation starts",
                            alpha_sd = 3,
                            beta_sd = 3,
                            beta_mean = 0,
-                           verbose = F)
+                           verbose = F))
           })

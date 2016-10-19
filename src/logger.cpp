@@ -6,6 +6,7 @@
 using namespace Rcpp;
 
 class Logger {
+public:
   std::map<std::string, double> parameters;
   
   // for winners
@@ -18,10 +19,10 @@ class Logger {
   }
   
   // adds a winners traits to the log
-  void add_winner(int gen, Male * m){
+  void log_winner(int gen, Male m){
     winner_gen.push_back(gen);
-    winner_alpha.push_back(m->alpha);
-    winner_beta.push_back(m->beta);
+    winner_alpha.push_back(m.alpha);
+    winner_beta.push_back(m.beta);
   }
   
   // returns a data frame log of winners at which generation and their traits

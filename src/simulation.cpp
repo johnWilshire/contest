@@ -2,6 +2,7 @@
 #include <Rcpp.h>
 //#include "male.cpp"
 #include "generation.cpp"
+#include "logger.cpp"
 
 using namespace Rcpp;
 
@@ -10,25 +11,28 @@ public:
   int current_gen, max_gens;
   double density, maturation_time;
   
+  Logger logger;
+  
   std::map<std::string, double> parameters;
   
   int num_nests, males_per_winner;
   
-  Simulation(std::map<std::string, double> parameters_){
+  Simulation(std::map<std::string, double> parameters_) : logger(parameters_) {
     parameters = parameters_;
     current_gen = 1;
+    logger = Logger(parameters);
   }
   
   void start(){
-    Generation gen (parameters);
+    Generation gen (parameters, &logger);
     
-    gen.start_generation();
+    gen.run_generation();
     
   }
 };
 
 // [[Rcpp::export]]
-void run_simulation(double max_gens, 
+DataFrame run_simulation(double max_gens, 
                     double males_per_winner,
                     double num_nests,
                     double female_mat_time,
@@ -74,6 +78,9 @@ void run_simulation(double max_gens,
   Simulation sim(parameters);
   // start the simulation
   sim.start();
+  
+  return sim.logger.get_winners();
+  
   
 }
 
