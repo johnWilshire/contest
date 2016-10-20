@@ -69,13 +69,37 @@ public:
         int nest_index = (int)std::floor(R::runif(0, parameters["num_nests"]));
         bool occupied = is_occupied(nest_index);
         if (occupied){
-          // fight over the nest  
           Male occupier = occupiers[nest_index];
           if(verbose){
             Rcout << "nest is occupied by " << occupier.id << std::endl;
-            Rcout << "  fight between attacker " << male.id << " and defender "<< occupier.id << "\n"; 
+            Rcout << "    fight between attacker " << male.id << " and defender "<< occupier.id << "\n"; 
           }
-          males.push(male);
+          // metabolise the occupying male
+          occupier.metabolise(time - male.last_event);
+          occupier.make_next_event(time); // updates last event counter
+          if(occupier.alive()){
+            // a fight over the nest takes place
+            // log fights
+            
+            // if the occupier has won
+            if (occupier.fight(male)) {
+              if (male.alive()){
+                males.push(male); // add the male to the list of searching males
+              }
+            } else { // the occupier has lost
+              if(occupier.alive()){
+                males.push(occupier);
+              }
+              // the male will now inhabit the nest
+              occupiers[nest_index] = male;
+            }
+            
+          } else {
+            // the attacker has won before the fight has started
+            occupiers[nest_index] = male;
+            // log death
+          }
+          
         } else {
           occupiers.push_back(male);
           if(verbose){
@@ -99,7 +123,6 @@ public:
     for(std::vector<Male>::iterator it = occupiers.begin();
         it != occupiers.end(); ++it){
       Male occupier = *it; 
-      
       occupier.metabolise(parameters["female_mat_time"] - occupier.last_event);
       if(occupier.alive()){
         winners.push_back(occupier);

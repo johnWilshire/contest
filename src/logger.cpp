@@ -9,10 +9,17 @@ class Logger {
 public:
   std::map<std::string, double> parameters;
   
-  // for winners
+  // for winner_log
   std::vector<int> winner_gen;
   std::vector<double> winner_alpha;
   std::vector<double> winner_beta;
+  
+  // for generation log
+  std::vector<int> generation_number;
+  std::vector<int> num_contests;
+  std::vector<int> num_deaths;
+  std::vector<int> num_winners;
+  
   
   Logger (std::map<std::string, double> parameters_){
     parameters = parameters_;

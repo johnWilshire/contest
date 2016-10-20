@@ -67,7 +67,7 @@ public:
   }
   
   // returns true if the occupier is the winner:
-  // manages the metabolic costs of fighting
+  // manages the metabolic costs of fighting from both parties
   bool fight(Male attacker){
     return true;
   }
