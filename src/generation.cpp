@@ -5,8 +5,8 @@
 #include "logger.cpp"
 
 using namespace Rcpp;
-
 class Generation {
+public:
   std::priority_queue<Male, std::vector<Male>, Compare> males;
   // instead of having a list of nests we will just have a list of occupying males
   // and when we pull an index out if the index is bigger than the list of occupiers
@@ -16,13 +16,11 @@ class Generation {
   
   int id;
   double time;
-  double density;
   
   bool verbose;
   Logger * logger;
   std::map<std::string, double> parameters;
-public:
-  
+
   // init the first generation
   Generation (std::map<std::string, double> parameters_, Logger * logger_) {
     time = 0;
@@ -41,11 +39,28 @@ public:
   // make a new generation from a previous one
   Generation (Generation * previous){
     
+    logger = previous->logger;
+    time = 0;
+    id = previous->id + 1;
+    parameters = previous->parameters;
+    verbose = parameters["verbose"];
     
+    int i = 0;
+    for(std::vector<Male>::iterator it = previous->winners.begin();
+          it != previous->winners.end(); ++it){
+      for(double j = 0; j < parameters["males_per_winner"]; j++){
+        males.push(Male(i, parameters, *it));
+        i++;
+      }
+    }
   }
   // returns true if the nest is occupied
   bool is_occupied(int nest_index){
-    return occupiers.size() >= nest_index;
+    return occupiers.size() > nest_index;
+  }
+  
+  bool is_extinct(){
+    return winners.size() == 0;
   }
   
   // the exploration phase
@@ -68,11 +83,13 @@ public:
         // select a nest to occupy 
         int nest_index = (int)std::floor(R::runif(0, parameters["num_nests"]));
         bool occupied = is_occupied(nest_index);
+        
+        // Rcout << "nest_index: " << nest_index << " occupiers size " << occupiers.size() << "\n";
+        
         if (occupied){
           Male occupier = occupiers[nest_index];
           if(verbose){
-            Rcout << "nest is occupied by " << occupier.id << std::endl;
-            Rcout << "    fight between attacker " << male.id << " and defender "<< occupier.id << "\n"; 
+            Rcout << "fight between attacker " << male.id << " and defender "<< occupier.id << "\n"; 
           }
           // metabolise the occupying male
           occupier.metabolise(time - male.last_event);
@@ -137,7 +154,6 @@ public:
   void run_generation () {
     if(verbose)
       Rcout << std::endl << "starting generation " << id <<  std::endl << std::endl;
-
     exploration();
     
     if(verbose)

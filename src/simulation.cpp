@@ -20,13 +20,20 @@ public:
   Simulation(std::map<std::string, double> parameters_) : logger(parameters_) {
     parameters = parameters_;
     current_gen = 1;
-    logger = Logger(parameters);
   }
   
   void start(){
     Generation gen (parameters, &logger);
-    
+    int i = 1;
+    Rcout << "running generation " << i << "\n";
     gen.run_generation();
+    do{
+      i++;
+      Rcout << "running generation " << i << "\n";
+      Generation current (&gen);
+      current.run_generation();
+      gen = current;
+    } while (i < parameters["max_gens"] && !gen.is_extinct());
     
   }
 };
@@ -80,7 +87,5 @@ DataFrame run_simulation(double max_gens,
   sim.start();
   
   return sim.logger.get_winners();
-  
-  
 }
 
