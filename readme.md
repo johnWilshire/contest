@@ -14,16 +14,19 @@ Starting at time `0`, we pull the time of an immature males maturation from
 an exponential distribution with rate `maturation_rate`.
 
 The longer males take to mature the more mass they have, this is influenced by
-the parameters `growth_a` and `growth_b`. 
+the parameters `growth_a` and `growth_b`.
+Their mass increases according to the differential equation: 
 ```
-  TODO insert mass growth DE here
+dm/dt = growth_a * m ^ growth_b
 ```
+WithThe  initial condtion `m(0) = initial_mass`
 
 When males mature they have an `energy` budget. The ammount of energy a male has
 when it matures is given by `energy = mass * mass_to_energy`
 
 Mature males then explore a patch and encounter nests.
-For each male, we pull the time of the next nest encounter from the exponential distribution
+For each male, we pull the time of the next nest 
+encounter from the exponential distribution
 with the rate `density`.
 
 A nest is then selected. If it is guarded/occupied by a male then a contest over ownership of the nest will take place, if it is not occupied the searching male will then guard/occupy the nest.
@@ -50,7 +53,7 @@ The male that has chosen to commit more to the fight will win.
 
 The cost of the fight to each male is the commitment.
 ### parameters
-TODO
+TODO make a table
 
 ## Usage and installation
 You can install this package with devtools.
