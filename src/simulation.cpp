@@ -25,11 +25,13 @@ public:
   void start(){
     Generation gen (parameters, &logger);
     int i = 1;
-    Rcout << "running generation " << i << "\n";
+    if(!parameters["quiet"])
+      Rcout << "running generation " << i << "\n";
     gen.run_generation();
     do{
       i++;
-      Rcout << "running generation " << i << "\n";
+      if(!parameters["quiet"])
+        Rcout << "running generation " << i << "\n";
       Generation current (&gen);
       current.run_generation();
       gen = current;
@@ -56,7 +58,8 @@ DataFrame run_simulation(double max_gens,
                     double alpha_sd,
                     double beta_mean,
                     double beta_sd,
-                    bool verbose) {
+                    bool verbose,
+                    bool quiet = false) {
 
   std::map<std::string, double> parameters;
   
@@ -81,6 +84,7 @@ DataFrame run_simulation(double max_gens,
   parameters["beta_sd"] = beta_sd;
   
   parameters["verbose"] = verbose ? 1 : 0;
+  parameters["quiet"] = quiet ? 1 : 0;
   
   Simulation sim(parameters);
   // start the simulation

@@ -17,5 +17,6 @@ test_that("run simulation starts",
                            alpha_sd = 3,
                            beta_sd = 3,
                            beta_mean = 0,
-                           verbose = F)))
+                           verbose = F,
+                           quiet = T)))
           })
