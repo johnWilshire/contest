@@ -97,7 +97,6 @@ public:
           if(occupier.alive()){
             // a fight over the nest takes place
             // log fights
-            
             // if the occupier has won
             if (occupier.fight(male)) {
               if (male.alive()){

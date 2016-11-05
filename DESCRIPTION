@@ -5,12 +5,14 @@ Version: 1.0
 Date: 2016-10-17
 Author: John Wilshire
 Maintainer: John Wilshire <john.h.wilshire@gmail.com>
-Description: 
-  Implements an individual based model that explores the emergence 
-  of alternative reproductive strategies. 
+Description: Implements an individual based model that explores the emergence
+    of alternative reproductive strategies.
 License: GPL (>= 2)
-Imports: 
-  Rcpp (>= 0.12.7),
-  jsonlite
+Imports:
+    Rcpp (>= 0.12.7),
+    jsonlite,
+    parallel
 LinkingTo: Rcpp
-Suggests: testthat
+Suggests:
+    testthat
+RoxygenNote: 5.0.1

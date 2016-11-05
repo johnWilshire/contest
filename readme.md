@@ -6,13 +6,13 @@ This package implements an individual based model (sometimes called an agent bas
 that explores how and why these ART's emerge in a species x, which has non overlapping
 generations.
 
-## Model
-### Imature phase
+# Model
+## Imature phase
 
 The males mature before the females. All females mature at the same time. 
 
 Starting at time `0`, we pull the time of an immature males maturation from
-an exponential distribution with rate `maturation_rate`.
+the exponential distribution with rate `maturation_rate`.
 
 The longer males take to mature the more mass they have, this is influenced by
 the parameters `growth_a` and `growth_b`.
@@ -48,17 +48,42 @@ Their traits
 `alpha` and `beta` deterimine how sensitive a male are to percieved difference in mass.
 For example male A's commitment against male B is
 
-```
-commitment = exp(beta)*(A.mass/B.mass)^alpha
-```
+$$
+commitment = exp(\beta)*(A.mass/B.mass)^\alpha
+$$
 The male that has chosen to commit more to the fight will win.
 
 The cost of the fight to each male is the commitment, this is deducted from 
 a males energy.
 
+### Todo:
+* Add noise to the commitment function (maybe)
 
-### parameters
-TODO make a table
+
+### Parameters
+
+Parameter         | Meaning
+------------------|-------------------------------------------------------
+max_gens          | Maximum number of generations to run the simulation for. 
+males_per_winner  | Number of male offspring per occupied nest.
+num_nests         | The number of nests that males can fight over. Also the initial number of males.
+density           | How dense nests are (determines the rate of nest enounter).
+metabolism        | How fast males use energy just by searching or occupying.
+female_mat_time   | The time at which females mature.
+maturation_rate   | Location parameter for the maturation of males.
+mutation_rate     | How frequently mutations to traits occur.
+mutation_sd       | mutations are mean zero with this much noise.
+mass_to_energy    | Mass to energy scaling factor.
+growth_a          | Growth parameter a
+growth_b          | Growth parameter b
+initial_mass      | The inital mass of a male.
+alpha_mean        | The mean used to initialiseation of the `alpha` contest trait.
+alpha_sd          | The mean used to initialiseation of the `alpha` contest trait.
+beta_sd           | The sd used to initialiseation of the `beta` contest trait.
+beta_max          | The maximum value of the `beta` contest trait.
+beta_mean         | The mean used to initialiseation of the `beta` contest trait.
+verbose           | Whether or not to print detailed mesages to the console.
+quiet             | Whether or not to print generation messages.
 
 ## Usage and installation
 You can install this package with devtools.
@@ -112,4 +137,4 @@ This package was created using Rcpp.
     * immature mortality ? `Why is this needed in the model again?` 
 * logging
     * log deaths and energy expenditure
-* finish DESCRIPTION file, update licence, (is GPL ok?)
+* update licence, (is GPL ok?)

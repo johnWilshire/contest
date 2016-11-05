@@ -26,15 +26,16 @@ public:
     make_next_event(maturation);
     grow(parameters["growth_a"],
          parameters["growth_b"],
-         parameters["initial_mass"],
-         maturation);
+                   parameters["initial_mass"],
+                             maturation);
     
     energy = mass * parameters["mass_to_energy"];
     
     // traits
-      // init traits from scratch
+    // init traits from scratch
     alpha = R::rnorm(parameters["alpha_mean"], parameters["alpha_sd"]);
     beta = R::rnorm(parameters["beta_mean"], parameters["beta_sd"]);
+    beta = beta > parameters["beta_max"] ? parameters["beta_max"] : beta;
   }
   
   Male (int id_, std::map<std::string, double> parameters, Male dad) {
@@ -59,8 +60,12 @@ public:
     if(R::runif(0,1) < parameters["mutation_rate"])
       alpha += R::rnorm(0, parameters["mutation_sd"]);
     
-    if(R::runif(0,1) < parameters["mutation_rate"])
+    if(R::runif(0,1) < parameters["mutation_rate"]){
       beta += R::rnorm(0, parameters["mutation_sd"]);
+      
+      // enforce a maximum beta trait
+      beta = beta > parameters["beta_max"] ? parameters["beta_max"] : beta;
+    }
   }
   
   void make_next_event (double time) {
@@ -69,7 +74,7 @@ public:
   }
   
   void grow (double growth_a, double growth_b, 
-              double initial_mass, double maturation) {
+             double initial_mass, double maturation) {
     mass = std::pow(initial_mass, 1 - growth_b); 
     mass += maturation * growth_a * ( 1.0 - growth_b);
     mass = std::pow(mass, 1.0 / (1.0 - growth_b));
@@ -102,13 +107,13 @@ public:
     
     double commitment_delta = std::fabs(defender_commit - attacker_commit);
     // no probability of upset yet
-
+    
     // get the cost of the fight
     double cost = std::min(energy, attacker.energy);
     cost = std::min(cost, commitment_delta);
     
     attacker.energy -= cost;
-             energy -= cost;
+    energy -= cost;
     
     // todo log contest energy if needed
     
@@ -129,7 +134,7 @@ public:
   double commitment (double opponent_mass){
     return std::exp(beta) * std::pow((mass / opponent_mass), alpha);
   }
-
+  
 };
 
 // for my priority_queue

@@ -1,6 +1,5 @@
 
 #include <Rcpp.h>
-//#include "male.cpp"
 #include "generation.cpp"
 #include "logger.cpp"
 
@@ -17,18 +16,18 @@ public:
   
   int num_nests, males_per_winner;
   
-  Simulation(std::map<std::string, double> parameters_) : logger(parameters_) {
+  Simulation (std::map<std::string, double> parameters_) : logger(parameters_) {
     parameters = parameters_;
     current_gen = 1;
   }
   
-  void start(){
+  void start () {
     Generation gen (parameters, &logger);
     int i = 1;
     if(!parameters["quiet"])
       Rcout << "running generation " << i << "\n";
     gen.run_generation();
-    do{
+    do {
       i++;
       if(!parameters["quiet"])
         Rcout << "running generation " << i << "\n";
@@ -58,6 +57,7 @@ DataFrame run_simulation(double max_gens,
                     double alpha_sd,
                     double beta_mean,
                     double beta_sd,
+                    double beta_max,
                     bool verbose,
                     bool quiet = false) {
 
@@ -82,6 +82,7 @@ DataFrame run_simulation(double max_gens,
   parameters["alpha_sd"] = alpha_sd;
   parameters["beta_mean"] = beta_mean;
   parameters["beta_sd"] = beta_sd;
+  parameters["beta_max"] = beta_max;
   
   parameters["verbose"] = verbose ? 1 : 0;
   parameters["quiet"] = quiet ? 1 : 0;

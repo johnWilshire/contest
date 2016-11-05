@@ -16,6 +16,7 @@ test_that("run simulation starts",
                            alpha_mean = 0,
                            alpha_sd = 3,
                            beta_sd = 3,
+                           beta_max = 2,
                            beta_mean = 0,
                            verbose = F,
                            quiet = T)))

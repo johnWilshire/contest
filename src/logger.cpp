@@ -14,12 +14,6 @@ public:
   std::vector<double> winner_alpha;
   std::vector<double> winner_beta;
   
-  // for generation log
-  std::vector<int> generation_number;
-  std::vector<int> num_contests;
-  std::vector<int> num_deaths;
-  std::vector<int> num_winners;
-  
   
   Logger (std::map<std::string, double> parameters_){
     parameters = parameters_;
