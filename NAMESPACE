@@ -2,3 +2,6 @@
 
 export(run_parallel)
 export(run_sim_from_json)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp,evalCpp)
+useDynLib(contest)
