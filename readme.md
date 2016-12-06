@@ -117,6 +117,7 @@ winners <- contest::run_simulation(
     alpha_sd = 3,
     beta_sd = 3,
     beta_mean = 0,
+    beta_max = 20,
     verbose = F,
     quiet = F)
 
