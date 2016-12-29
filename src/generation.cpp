@@ -16,7 +16,7 @@ public:
   
   int id;
   double time;
-  
+  bool log;
   bool verbose;
   Logger * logger;
   std::map<std::string, double> parameters;
@@ -29,6 +29,7 @@ public:
     verbose = parameters["verbose"];
     
     logger = logger_;
+    log = true;
     
     // initialise males
     for (double i = 0; i < parameters["num_nests"]; i++){
@@ -44,6 +45,8 @@ public:
     id = previous->id + 1;
     parameters = previous->parameters;
     verbose = parameters["verbose"];
+    
+    log = (int)id % (int)parameters["log_every"] == 0;
     
     int i = 0;
     for(std::vector<Male>::iterator it = previous->winners.begin();
@@ -113,7 +116,7 @@ public:
           } else {
             // the attacker has won before the fight has started
             occupiers[nest_index] = male;
-            // log death
+            // log male
           }
           
         } else {
@@ -158,17 +161,19 @@ public:
     if(verbose)
       Rcout << "females have matured" << std::endl<< std::endl;
     
+    // clean up
     post_exploration();
     
     // print winners
-    
     if(verbose)
-      Rcout << "the winners for generation " << id << " are: \n";
-    for(std::vector<Male>::iterator it = winners.begin();
-        it != winners.end(); ++it){
-      if(verbose)
-        it->print();
-      logger->log_winner(id, *it);
+      Rcout << "The winners for generation " << id << " are: \n";
+    if(log){
+      for(std::vector<Male>::iterator it = winners.begin();
+          it != winners.end(); ++it){
+        if(verbose)
+          it->print();
+        logger->log_winner(id, *it);
+      } 
     }
   }
 };

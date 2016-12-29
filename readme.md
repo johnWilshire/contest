@@ -82,6 +82,7 @@ alpha_sd          | The mean used to initialiseation of the `alpha` contest trai
 beta_sd           | The sd used to initialiseation of the `beta` contest trait.
 beta_max          | The maximum value of the `beta` contest trait.
 beta_mean         | The mean used to initialiseation of the `beta` contest trait.
+log_every         | Log traits of winners ever this number of generations. 
 verbose           | Whether or not to print detailed mesages to the console.
 quiet             | Whether or not to print generation messages.
 

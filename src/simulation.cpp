@@ -31,7 +31,7 @@ public:
       i++;
       if(!parameters["quiet"])
         Rcout << "running generation " << i << "\n";
-      Generation current (&gen);
+      Generation current (&gen); // create a new generation with males 
       current.run_generation();
       gen = current;
     } while (i < parameters["max_gens"] && !gen.is_extinct());
@@ -59,12 +59,12 @@ DataFrame run_simulation(double max_gens,
                     double beta_sd,
                     double beta_max,
                     bool verbose,
-                    bool quiet = false) {
+                    bool quiet = false,
+                    int log_every = 10) {
 
   std::map<std::string, double> parameters;
   
   // setup the parameter map (this saves us from having to pass around heaps of arguments)
-  
   parameters["max_gens"] = max_gens; 
   parameters["males_per_winner"] = males_per_winner; 
   parameters["num_nests"] = num_nests; 
@@ -86,6 +86,7 @@ DataFrame run_simulation(double max_gens,
   
   parameters["verbose"] = verbose ? 1 : 0;
   parameters["quiet"] = quiet ? 1 : 0;
+  parameters["log_every"] = log_every;
   
   Simulation sim(parameters);
   // start the simulation
