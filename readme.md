@@ -3,7 +3,7 @@ Contests over mates can be very costly.
 
 Alternative reproductive strategies (ART's) can develop as a way to minimise these costs.
 This package implements an individual based model (sometimes called an agent based model),
-that explores how and why these ART's emerge in a species x, which has non overlapping
+that explores how and why these ART's emerge in a theoretical species, which has non overlapping
 generations.
 
 # Model

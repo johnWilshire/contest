@@ -1,12 +1,10 @@
 #' Title Runs run_simulation in parallel over parameters 
 #' Provides a wrapper to perform a line search of a parameter and returns the 
-#' results of run_simmulation with the parameters specified.
+#' results of run_simulation with the parameters specified.
 #' 
 #' @param params Parameters for `run_simulation`
 #' @param varied_parameter 
-#' @param from Starting value of varied parameter, See `seq`.
-#' @param to Final value of varied parameter. See `seq`.
-#' @param by Increment value. See `seq`.
+#' @param values values to run the parameter over
 #' @param mc_opts Options for mclapply, setting mc.cores is a good idea.
 #'
 #' @return A list of the result of calling run_simulation with the varied parameter.
@@ -33,18 +31,16 @@
 #'                 beta_mean = 0,
 #'                 verbose = F,
 #'                 quiet = T)
-#'  run_parallel(params, "density", 0.1, 4, 0.5, mc.cores = 4) -> sim
+#'  run_parallel(params, "density", c(0.25, 0.5, 1), mc.cores = 4) -> sim
 #'  Reduce(rbind, sim) -> df
 #'  plot(df$generation, df$alpha, col = df$density)
 #'  
 run_parallel <- function(params, 
                          varied_parameter, 
-                         from, 
-                         to, 
-                         by, 
+                         values,
                          ...){
   parallel::mclapply(
-    seq(from, to, by), 
+    values, 
     FUN = function(x) {
       params[[varied_parameter]] <- x
       df <- do.call(run_simulation, params)

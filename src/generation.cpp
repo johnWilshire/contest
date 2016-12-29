@@ -166,7 +166,7 @@ public:
     
     // print winners
     if(verbose)
-      Rcout << "The winners for generation " << id << " are: \n";
+      Rcout << "The winners for generation " << id << " are: \n";
     if(log){
       for(std::vector<Male>::iterator it = winners.begin();
           it != winners.end(); ++it){
