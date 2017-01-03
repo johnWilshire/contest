@@ -70,7 +70,7 @@ public:
   
   void make_next_event (double time) {
     last_event = next_event;
-    next_event = time + R::rexp(density);
+    next_event = time + R::rexp(density); // R::rexp uses the scale as the parameter, r's rexp uses the rate parameter
   }
   
   void grow (double growth_a, double growth_b, 

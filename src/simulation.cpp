@@ -44,7 +44,7 @@ DataFrame run_simulation(double max_gens,
                     double males_per_winner,
                     double num_nests,
                     double female_mat_time,
-                    double density,
+                    double encounter_delta,
                     double metabolism,
                     double maturation_rate,
                     double mutation_rate,
@@ -68,7 +68,9 @@ DataFrame run_simulation(double max_gens,
   parameters["max_gens"] = max_gens; 
   parameters["males_per_winner"] = males_per_winner; 
   parameters["num_nests"] = num_nests; 
-  parameters["density"] = density;
+  if(encounter_delta <= 0) Rcpp::stop("encounter_delta cannot be less than equal to zero!");
+  parameters["density"] = encounter_delta;
+  
   parameters["metabolism"] = metabolism;
   parameters["maturation_rate"] = maturation_rate;
   parameters["female_mat_time"] = female_mat_time;

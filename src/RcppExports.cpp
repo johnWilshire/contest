@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // run_simulation
-DataFrame run_simulation(double max_gens, double males_per_winner, double num_nests, double female_mat_time, double density, double metabolism, double maturation_rate, double mutation_rate, double mutation_sd, double mass_to_energy, double growth_a, double growth_b, double initial_mass, double alpha_mean, double alpha_sd, double beta_mean, double beta_sd, double beta_max, bool verbose, bool quiet, int log_every);
-RcppExport SEXP contest_run_simulation(SEXP max_gensSEXP, SEXP males_per_winnerSEXP, SEXP num_nestsSEXP, SEXP female_mat_timeSEXP, SEXP densitySEXP, SEXP metabolismSEXP, SEXP maturation_rateSEXP, SEXP mutation_rateSEXP, SEXP mutation_sdSEXP, SEXP mass_to_energySEXP, SEXP growth_aSEXP, SEXP growth_bSEXP, SEXP initial_massSEXP, SEXP alpha_meanSEXP, SEXP alpha_sdSEXP, SEXP beta_meanSEXP, SEXP beta_sdSEXP, SEXP beta_maxSEXP, SEXP verboseSEXP, SEXP quietSEXP, SEXP log_everySEXP) {
+DataFrame run_simulation(double max_gens, double males_per_winner, double num_nests, double female_mat_time, double encounter_delta, double metabolism, double maturation_rate, double mutation_rate, double mutation_sd, double mass_to_energy, double growth_a, double growth_b, double initial_mass, double alpha_mean, double alpha_sd, double beta_mean, double beta_sd, double beta_max, bool verbose, bool quiet, int log_every);
+RcppExport SEXP contest_run_simulation(SEXP max_gensSEXP, SEXP males_per_winnerSEXP, SEXP num_nestsSEXP, SEXP female_mat_timeSEXP, SEXP encounter_deltaSEXP, SEXP metabolismSEXP, SEXP maturation_rateSEXP, SEXP mutation_rateSEXP, SEXP mutation_sdSEXP, SEXP mass_to_energySEXP, SEXP growth_aSEXP, SEXP growth_bSEXP, SEXP initial_massSEXP, SEXP alpha_meanSEXP, SEXP alpha_sdSEXP, SEXP beta_meanSEXP, SEXP beta_sdSEXP, SEXP beta_maxSEXP, SEXP verboseSEXP, SEXP quietSEXP, SEXP log_everySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -15,7 +15,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type males_per_winner(males_per_winnerSEXP);
     Rcpp::traits::input_parameter< double >::type num_nests(num_nestsSEXP);
     Rcpp::traits::input_parameter< double >::type female_mat_time(female_mat_timeSEXP);
-    Rcpp::traits::input_parameter< double >::type density(densitySEXP);
+    Rcpp::traits::input_parameter< double >::type encounter_delta(encounter_deltaSEXP);
     Rcpp::traits::input_parameter< double >::type metabolism(metabolismSEXP);
     Rcpp::traits::input_parameter< double >::type maturation_rate(maturation_rateSEXP);
     Rcpp::traits::input_parameter< double >::type mutation_rate(mutation_rateSEXP);
@@ -32,7 +32,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     Rcpp::traits::input_parameter< bool >::type quiet(quietSEXP);
     Rcpp::traits::input_parameter< int >::type log_every(log_everySEXP);
-    rcpp_result_gen = Rcpp::wrap(run_simulation(max_gens, males_per_winner, num_nests, female_mat_time, density, metabolism, maturation_rate, mutation_rate, mutation_sd, mass_to_energy, growth_a, growth_b, initial_mass, alpha_mean, alpha_sd, beta_mean, beta_sd, beta_max, verbose, quiet, log_every));
+    rcpp_result_gen = Rcpp::wrap(run_simulation(max_gens, males_per_winner, num_nests, female_mat_time, encounter_delta, metabolism, maturation_rate, mutation_rate, mutation_sd, mass_to_energy, growth_a, growth_b, initial_mass, alpha_mean, alpha_sd, beta_mean, beta_sd, beta_max, verbose, quiet, log_every));
     return rcpp_result_gen;
 END_RCPP
 }

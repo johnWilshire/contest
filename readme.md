@@ -12,7 +12,7 @@ generations.
 The males mature before the females. All females mature at the same time. 
 
 Starting at time `0`, we pull the time of an immature males maturation from
-the exponential distribution with rate `maturation_rate`.
+the exponential distribution with scale parameter `maturation_rate`, which is the average time at which a male will mature.
 
 The longer males take to mature the more mass they have, this is influenced by
 the parameters `growth_a` and `growth_b`.
@@ -20,7 +20,7 @@ Their mass increases according to the differential equation:
 ```
 dm/dt = growth_a * m ^ growth_b
 ```
-With the initial condtion `m(0) = initial_mass`
+This is solved with the initial condtion `m(0) = initial_mass`
 
 When males mature they have an `energy` budget. The ammount of energy a male has
 when it matures is given by `energy = mass * mass_to_energy`.
@@ -30,7 +30,7 @@ Males have a metabolic cost of `metabolism` per time unit.
 Mature males then explore a patch and encounter nests.
 For each male, we pull the time of the next nest 
 encounter from the exponential distribution
-with the rate `density`.
+with the scale parameter `encounter_delta`. Which is the average time between encounters. 
 
 A nest is then selected. If it is guarded/occupied by a male then a contest over ownership of the nest will take place, if it is not occupied the searching male will then guard/occupy the nest.
 
@@ -48,9 +48,9 @@ Their traits
 `alpha` and `beta` deterimine how sensitive a male are to percieved difference in mass.
 For example male A's commitment against male B is
 
-$$
-commitment = exp(\beta)*(A.mass/B.mass)^\alpha
-$$
+```
+commitment = exp(beta)*(A.mass/B.mass)^alpha
+```
 The male that has chosen to commit more to the fight will win.
 
 The cost of the fight to each male is the commitment, this is deducted from 
@@ -67,15 +67,15 @@ Parameter         | Meaning
 max_gens          | Maximum number of generations to run the simulation for. 
 males_per_winner  | Number of male offspring per occupied nest.
 num_nests         | The number of nests that males can fight over. Also the initial number of males.
-density           | How dense nests are (determines the rate of nest enounter).
+encounter_delta   | Mean time between nest enounters for a male.
 metabolism        | How fast males use energy just by searching or occupying.
 female_mat_time   | The time at which females mature.
 maturation_rate   | Location parameter for the maturation of males.
 mutation_rate     | How frequently mutations to traits occur.
 mutation_sd       | mutations are mean zero with this much noise.
 mass_to_energy    | Mass to energy scaling factor.
-growth_a          | Growth parameter a
-growth_b          | Growth parameter b
+growth_a          | Growth parameter a.
+growth_b          | Growth parameter b.
 initial_mass      | The inital mass of a male.
 alpha_mean        | The mean used to initialiseation of the `alpha` contest trait.
 alpha_sd          | The mean used to initialiseation of the `alpha` contest trait.
@@ -104,7 +104,7 @@ winners <- contest::run_simulation(
     max_gens = 1000,
     males_per_winner = 20,
     num_nests = 500,
-    density = 1,
+    encounter_delta = 1,
     metabolism = 1,
     female_mat_time = 10, 
     maturation_rate = 1,
