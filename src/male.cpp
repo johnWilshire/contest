@@ -13,6 +13,7 @@ public:
   double last_event; 
   double density; 
   double metabolism;
+  int contest_noise;
   double alpha, beta; // for contests
   
   // first generation constructor
@@ -20,7 +21,7 @@ public:
     id = id_;
     density = parameters["density"];
     metabolism = parameters["metabolism"];
-    
+    contest_noise = parameters["contest_noise"];
     double maturation = R::rexp(parameters["maturation_rate"]);
     last_event = maturation;
     make_next_event(maturation);
@@ -42,7 +43,7 @@ public:
     id = id_;
     density = parameters["density"];
     metabolism = parameters["metabolism"];
-    
+    contest_noise = parameters["contest_noise"];
     double maturation = R::rexp(parameters["maturation_rate"]);
     last_event = maturation;
     make_next_event(maturation);
@@ -132,7 +133,8 @@ public:
   
   // returns the commitment of a male for the fight
   double commitment (double opponent_mass){
-    return std::exp(beta) * std::pow((mass / opponent_mass), alpha);
+    double z = contest_noise == 0 ? 1 : R::rf(contest_noise, contest_noise);
+    return std::exp(beta) * std::pow((mass / opponent_mass)*z, alpha);
   }
   
 };

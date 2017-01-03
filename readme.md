@@ -49,8 +49,11 @@ Their traits
 For example male A's commitment against male B is
 
 ```
-commitment = exp(beta)*(A.mass/B.mass)^alpha
+commitment = exp(beta)*((A.mass/B.mass)*z)^alpha
 ```
+Where `z` is a random number drawn from an f distribution with degrees of freedom `contest_noise`, `contest_noise`. To represent the two judgements that a male has to make, that about its own size and that of its opponents.
+If `contest_noise` equals 0 then z = 1.
+
 The male that has chosen to commit more to the fight will win.
 
 The cost of the fight to each male is the commitment, this is deducted from 

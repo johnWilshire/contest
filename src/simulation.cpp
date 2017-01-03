@@ -58,6 +58,7 @@ DataFrame run_simulation(double max_gens,
                     double beta_mean,
                     double beta_sd,
                     double beta_max,
+                    int contest_noise,
                     bool verbose,
                     bool quiet = false,
                     int log_every = 10) {
@@ -85,6 +86,7 @@ DataFrame run_simulation(double max_gens,
   parameters["beta_mean"] = beta_mean;
   parameters["beta_sd"] = beta_sd;
   parameters["beta_max"] = beta_max;
+  parameters["contest_noise"] = contest_noise;
   
   parameters["verbose"] = verbose ? 1 : 0;
   parameters["quiet"] = quiet ? 1 : 0;
