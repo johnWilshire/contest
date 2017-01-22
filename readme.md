@@ -95,6 +95,7 @@ alpha_sd          | The mean used to initialiseation of the `alpha` contest trai
 beta_sd           | The sd used to initialiseation of the `beta` contest trait.
 beta_max          | The maximum value of the `beta` contest trait.
 beta_mean         | The mean used to initialiseation of the `beta` contest trait.
+contest_noise     | The degrees of freedom used to generate the contest error.
 log_every         | Log traits of winners ever this number of generations. 
 verbose           | Whether or not to print detailed mesages to the console.
 quiet             | Whether or not to print generation messages.
@@ -132,6 +133,7 @@ winners <- contest::run_simulation(
     beta_sd = 3,
     beta_mean = 0,
     beta_max = 20,
+    contest_noise = 100, 
     verbose = F,
     quiet = F)
 
