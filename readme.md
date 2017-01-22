@@ -59,8 +59,18 @@ The male that has chosen to commit more to the fight will win.
 The cost of the fight to each male is the commitment, this is deducted from 
 a males energy.
 
+## Model output
+For each surviving male from a generation the following is logged
+* What generation it is from
+* The males alpha trait
+* The males beta trait
+* The males mass
+* the number of contests (fights) that the male has been involved in
+
+These results are returned as a dataframe.
+
 ### Todo:
-* Add noise to the commitment function (maybe)
+* implement learning with contest experience
 
 
 ### Parameters

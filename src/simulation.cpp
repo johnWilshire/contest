@@ -31,7 +31,7 @@ public:
       i++;
       if(!parameters["quiet"])
         Rcout << "running generation " << i << "\n";
-      Generation current (&gen); // create a new generation with males 
+      Generation current (&gen); // create a new generation with males of the previous generation
       current.run_generation();
       gen = current;
     } while (i < parameters["max_gens"] && !gen.is_extinct());

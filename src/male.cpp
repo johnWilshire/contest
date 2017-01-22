@@ -14,12 +14,14 @@ public:
   double density; 
   double metabolism;
   int contest_noise;
+  int num_fights;
   double alpha, beta; // for contests
   
   // first generation constructor
   Male (int id_, std::map<std::string, double> parameters) {
     id = id_;
     density = parameters["density"];
+    num_fights = 0;
     metabolism = parameters["metabolism"];
     contest_noise = parameters["contest_noise"];
     double maturation = R::rexp(parameters["maturation_rate"]);
@@ -41,6 +43,7 @@ public:
   
   Male (int id_, std::map<std::string, double> parameters, Male dad) {
     id = id_;
+    num_fights = 0;
     density = parameters["density"];
     metabolism = parameters["metabolism"];
     contest_noise = parameters["contest_noise"];
@@ -96,6 +99,9 @@ public:
   // returns true if the occupier is the winner:
   // manages the metabolic costs of fighting from both parties
   bool fight(Male attacker){
+    // increment the fight counter
+    attacker.num_fights++;
+    num_fights++;
     
     bool winner = false;
     double defender_commit = commitment(attacker.mass);
